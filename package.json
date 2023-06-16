@@ -1,0 +1,17 @@
+{
+  "name": "com.adeelriaz.tools",
+  "version": "1.0.0",
+  "displayName": "Adeel's Tools",
+  "author": {
+    "name": "Adeel Riaz",
+    "email": "adeelwitty@gmail.com",
+    "url": "http://github.com/iadeelriaz"
+  },
+  "keywords": [
+    "utility",
+    "editor"
+  ],
+  "type": "tool",
+  "unity": "2017.3",
+  "description": "This package provides a handful of scripts which can improve\nthe productivity of any unity project."
+}
