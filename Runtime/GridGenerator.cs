@@ -13,9 +13,17 @@ namespace AdeelRiaz.Tools
         [SerializeField] private Vector3 blockSize = new Vector3(1, 1, 1);
         [SerializeField] private List<GameObject> gridItems;
 
+        // The center of the grid
+        private Vector3 center;
+
+        private Vector3 pos;
+
         public void GenerateGrid()
         {
             ClearGrid();
+            // Calculate the center of the grid based on the number of rows, columns and layers and the offset
+            center = new Vector3((gridSize.x - 1) * gridOffset.x / 2f, (gridSize.y - 1) * gridOffset.y / 2f, (gridSize.z - 1) * gridOffset.z / 2f);
+
             gridItems = new List<GameObject>();
             for (int y = 0; y < gridSize.y; y++)
             {
@@ -29,8 +37,13 @@ namespace AdeelRiaz.Tools
                         block = (GameObject)PrefabUtility.InstantiatePrefab(gridBlockPrefab, transform);
 #endif
                         // GameObject block = Instantiate(gridBlockPrefab, transform);
-                        block.transform.localPosition = new Vector3(x * gridOffset.x,
-                            y * gridOffset.y, z * gridOffset.z);
+                        //block.transform.localPosition = new Vector3(x * gridOffset.x, y * gridOffset.y, z * gridOffset.z);
+
+                        pos = new Vector3(x * gridOffset.x, y * gridOffset.y, z * gridOffset.z);
+                        pos -= center;
+
+                        block.transform.localPosition = pos;
+
                         block.name = gridBlockPrefab.name;
                         block.transform.localScale =
                             new Vector3(blockSize.x, blockSize.y, blockSize.y);
