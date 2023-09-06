@@ -107,6 +107,87 @@ namespace AdeelRiaz.Tools
             return new Vector3(v.x, v.y, z);
         }
 
+        /// <summary>
+        /// Normalized the angle. between -180 and 180 degrees
+        /// </summary>
+        /// <param Name="eulerAngle">Euler angle.</param>
+        public static Vector3 NormalizeAngle(this Vector3 eulerAngle)
+        {
+            var delta = eulerAngle;
+
+            if (delta.x > 180)
+            {
+                delta.x -= 360;
+            }
+            else if (delta.x < -180)
+            {
+                delta.x += 360;
+            }
+
+            if (delta.y > 180)
+            {
+                delta.y -= 360;
+            }
+            else if (delta.y < -180)
+            {
+                delta.y += 360;
+            }
+
+            if (delta.z > 180)
+            {
+                delta.z -= 360;
+            }
+            else if (delta.z < -180)
+            {
+                delta.z += 360;
+            }
+
+            return new Vector3(delta.x, delta.y, delta.z);//round values to angle;
+        }
+
+        public static Vector3 Difference(this Vector3 vector, Vector3 otherVector)
+        {
+            return otherVector - vector;
+        }
+        public static Vector3 AngleFormOtherDirection(this Vector3 directionA, Vector3 directionB)
+        {
+            if (directionA.normalized.magnitude == 0 || directionB.normalized.magnitude == 0) return Vector3.zero;
+            return Quaternion.LookRotation(directionA).eulerAngles.AngleFormOtherEuler(Quaternion.LookRotation(directionB).eulerAngles);
+        }
+
+        public static Vector3 AngleFormOtherDirection(this Vector3 directionA, Vector3 directionB, Vector3 up)
+        {
+            return Quaternion.LookRotation(directionA, up).eulerAngles.AngleFormOtherEuler(Quaternion.LookRotation(directionB, up).eulerAngles);
+        }
+        public static Vector3 AngleFormOtherEuler(this Vector3 eulerA, Vector3 eulerB)
+        {
+            Vector3 angles = eulerA.NormalizeAngle().Difference(eulerB.NormalizeAngle()).NormalizeAngle();
+            return angles;
+        }
+        public static string ToStringColor(this bool value)
+        {
+            if (value) return "<color=green>YES</color>";
+            else return "<color=red>NO</color>";
+        }
+
+        public static float ClampAngle(float angle, float min, float max)
+        {
+            do
+            {
+                if (angle < -360)
+                {
+                    angle += 360;
+                }
+
+                if (angle > 360)
+                {
+                    angle -= 360;
+                }
+            } while (angle < -360 || angle > 360);
+
+            return Mathf.Clamp(angle, min, max);
+        }
+
         #endregion
     }
 }
