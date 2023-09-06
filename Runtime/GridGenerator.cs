@@ -13,6 +13,8 @@ namespace AdeelRiaz.Tools
         [SerializeField] private Vector3 blockSize = new Vector3(1, 1, 1);
         [SerializeField] private List<GameObject> gridItems;
 
+        [SerializeField] private bool centerPivot = false;
+
         // The center of the grid
         private Vector3 center;
 
@@ -20,6 +22,8 @@ namespace AdeelRiaz.Tools
 
         public void GenerateGrid()
         {
+            if (gridItems == null) return;
+
             ClearGrid();
             // Calculate the center of the grid based on the number of rows, columns and layers and the offset
             center = new Vector3((gridSize.x - 1) * gridOffset.x / 2f, (gridSize.y - 1) * gridOffset.y / 2f, (gridSize.z - 1) * gridOffset.z / 2f);
@@ -40,7 +44,10 @@ namespace AdeelRiaz.Tools
                         //block.transform.localPosition = new Vector3(x * gridOffset.x, y * gridOffset.y, z * gridOffset.z);
 
                         pos = new Vector3(x * gridOffset.x, y * gridOffset.y, z * gridOffset.z);
-                        pos -= center;
+                        if (centerPivot)
+                        {
+                            pos -= center;
+                        }
 
                         block.transform.localPosition = pos;
 
