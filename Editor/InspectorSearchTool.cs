@@ -1,4 +1,4 @@
-using UnityEngine;
+    using UnityEngine;
 using System.Linq;
 using UnityEditor;
 [InitializeOnLoad]
@@ -29,7 +29,7 @@ static class InspectorSearchTool
             var totalRect = EditorGUILayout.GetControlRect();
             try
             {
-                EditorGUI.LabelField(totalRect, $"vInspector Search Tool | Hided Components : {components.FindAll(c => c.hideFlags == HideFlags.HideInInspector).Count.ToString("00")} | {components.Count.ToString("00")}", EditorStyles.toolbar);
+                EditorGUI.LabelField(totalRect, $"Inspector Search Tool | Hided Components : {components.FindAll(c => c.hideFlags == HideFlags.HideInInspector).Count.ToString("00")} | {components.Count.ToString("00")}", EditorStyles.toolbar);
                 totalRect = EditorGUILayout.GetControlRect();
                 search = EditorGUI.TextField(totalRect, search, EditorStyles.toolbarSearchField);
 
